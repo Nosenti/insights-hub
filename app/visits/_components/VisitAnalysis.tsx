@@ -6,6 +6,8 @@ import {
   LineChart,
   Line,
   CartesianGrid,
+  XAxis,
+  YAxis,
   Tooltip,
   ResponsiveContainer,
   Legend,
@@ -80,6 +82,14 @@ function VisitAnalysis({ data }: VisitAnalysisProps) {
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={aggregatedData}>
             <CartesianGrid strokeDasharray="3 3" />
+            <XAxis
+              dataKey="date"
+              tick={{ fontSize: 12 }}
+              
+            />
+            <YAxis
+              
+            />
             <Tooltip />
             <Legend />
             <Line
