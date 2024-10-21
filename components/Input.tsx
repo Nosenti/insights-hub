@@ -1,15 +1,14 @@
-// Input.tsx or Input.jsx
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   variant?: 'default' | 'outline' | 'filled';
   size?: 'sm' | 'md' | 'lg';
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
-    { className, variant = 'default', size = 'md', type = 'text', ...props },
+    { className, variant = 'default', size = 'sm', type = 'text', ...props },
     ref
   ) => {
     const baseClasses =
@@ -25,7 +24,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     };
 
     const sizeClasses = {
-      sm: 'px-2 py-1 text-sm',
+      sm: 'px-2 py-2 text-sm',
       md: 'px-3 py-2 text-base',
       lg: 'px-4 py-3 text-lg',
     };

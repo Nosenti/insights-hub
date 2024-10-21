@@ -34,7 +34,7 @@ export default function SidebarButton({
           className: isActive ? 'text-secondary_green' : 'text-gray-300',
         })}
       </span>
-      {!isMinimized && <span>{children}</span>}
+      {!isMinimized && <span className='text-base'>{children}</span>}
     </Link>
   );
 }

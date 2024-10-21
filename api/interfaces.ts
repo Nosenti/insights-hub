@@ -1,4 +1,3 @@
-// Define the data type
 export interface Customer {
 	id: number;
 	name: string;

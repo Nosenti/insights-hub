@@ -1,31 +1,42 @@
-// LandingPage.jsx or LandingPage.tsx
-import React from 'react';
+import Card from '@/components/Card';
+import { getWebsiteVisits } from '@/utils/lib/data-service';
 
-function Page() {
-  // Mock data
-  const totalVisitors = 25400;
-  const bounceRate = 38.7; // in percentage
-  const avgSessionDuration = 5.2; // in minutes
+export const metadata = {
+	title: 'Overview'
+};
+
+async function Page() {
+
+  const visitsData = await getWebsiteVisits();
+  /**
+   * Using reduce function to aggregate total visitors, bounce rate and average session duration
+   */
+  const totalVisitors = visitsData.reduce((sum, record) => sum + record.unique_visitors, 0);
+  const bounceRate =
+    (visitsData.reduce((sum, record) => sum + record.bounce_rate, 0) / visitsData.length) * 100;
+  const avgSessionDuration =
+    visitsData.reduce((sum, record) => sum + record.average_session_duration, 0) / visitsData.length;
+  const avgSessionDurationInMinutes = avgSessionDuration / 60;
 
   return (
-    <div className="p-4 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-bold mb-6">Website Overview</h1>
+    <div className="p-4 min-h-screen">
+      <h1 className="text-2xl text-secondary_green font-bold mb-6">Overview</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Total Visitors */}
-        <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-lg font-medium text-gray-700 mb-2">Total Visitors</h2>
-          <p className="text-3xl font-bold text-gray-900">{totalVisitors.toLocaleString()}</p>
-        </div>
-        {/* Bounce Rate */}
-        <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-lg font-medium text-gray-700 mb-2">Bounce Rate</h2>
-          <p className="text-3xl font-bold text-gray-900">{bounceRate}%</p>
-        </div>
-        {/* Average Session Duration */}
-        <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-lg font-medium text-gray-700 mb-2">Avg. Session Duration</h2>
-          <p className="text-3xl font-bold text-gray-900">{avgSessionDuration} min</p>
-        </div>
+        <Card
+        title="Total Visitors"
+          value={`${totalVisitors}`}
+          bgColor="bg-primary"
+          textColor="text-gray-300"/>
+        <Card
+        title="Bounce Rate"
+          value={`${bounceRate.toPrecision(3)} %`}
+          bgColor="bg-secondary_green/30"
+          textColor="text-secondary_green"/>
+        <Card
+        title="Avg. Session Duration"
+          value={`${avgSessionDurationInMinutes.toFixed(1)} mins`}
+          bgColor="bg-secondary_purple/30"
+          textColor="text-secondary_purple"/>
       </div>
     </div>
   );
